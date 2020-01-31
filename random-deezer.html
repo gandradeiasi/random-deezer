@@ -9,25 +9,52 @@
 </head>
 
 <body>
+    <h1>Pressione qualquer tecla ou clique na tela para abrir novas abas com as músicas encontradas</h1>
+    <h2>Músicas encontradas: <span id="musicas_encontradas">0</span></h2>
 </body>
 <script>
-    for (let i = 0; i < 1000; i++) sorteia_musica();
+    const buffer = 20;
+    const numero_abas = 10;
+    const time_interval = 1000;
+    const time_timeout = 100;
+
+    let contador_buscadores = 0;
+    let musicas = [];
+
+    preenche_contadores();
+
+    setInterval(() => {
+        preenche_contadores();
+        document.querySelector("#musicas_encontradas").innerHTML = musicas.length;
+    }, 1000);
+
+    document.onclick = () => abre_abas();
+    document.onkeypress = () => abre_abas();
+
+    function abre_abas() {
+        for (let i = 0; i < (musicas.length < numero_abas ? musicas.length : numero_abas); i++) {
+            window.open(musicas[0]);
+            musicas.shift();
+            contador_buscadores--;
+        }
+    }
 
     function sorteia_musica() {
-        let url = 'https://api.deezer.com/track/' + (parseInt(Math.random() * 860000000) + 1);
+        let random_number = (parseInt(Math.random() * 860000000) + 1);
+        let url = 'https://api.deezer.com/track/' + random_number;
         fetch("https://cors-anywhere.herokuapp.com/" + url)
             .then(x => x.json())
             .then(x => {
-                if (!x.error) {
-                    let link = document.createElement("a");
-                    link.href = url.replace("api.","");
-                    link.innerHTML = x.title;
-                    
-                    document.body.prepend(document.createElement("BR"));
-                    document.body.prepend(link);
-                } 
-                sorteia_musica();
+                if (!x.error) musicas.push('https://deezer.com/track/' + random_number);
+                else sorteia_musica();
             })
+    }
+
+    function preenche_contadores() {
+        while (contador_buscadores < buffer) {
+            sorteia_musica();
+            contador_buscadores++;
+        }
     }
 </script>
 
