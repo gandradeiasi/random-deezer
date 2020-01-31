@@ -9,29 +9,34 @@
 </head>
 
 <body>
-    <h1>Pressione qualquer tecla ou clique na tela para abrir novas abas com as músicas encontradas</h1>
-    <h2>Músicas encontradas: <span id="musicas_encontradas">0</span></h2>
+    <h1>Clique <span id="botao" style="color: blue; cursor: pointer;">aqui</span> ou pressione qualquer tecla para abrir
+        novas abas com as músicas encontradas</h1>
+        <h2>Abas a abrir: <input type="number" value="10"></h2>
+    <h2>Músicas encontradas: <span id="musicas_encontradas">0</span>/<span id="max_musicas_encontradas"></span></h2>
 </body>
 <script>
-    const buffer = 20;
-    const numero_abas = 10;
+    const buffer = 500;
     const time_interval = 1000;
     const time_timeout = 100;
+    const id_maximo = 870000000;
 
     let contador_buscadores = 0;
     let musicas = [];
+
+    document.querySelector("#max_musicas_encontradas").innerHTML = buffer;
 
     preenche_contadores();
 
     setInterval(() => {
         preenche_contadores();
         document.querySelector("#musicas_encontradas").innerHTML = musicas.length;
-    }, 1000);
+    }, 100);
 
-    document.onclick = () => abre_abas();
+    document.querySelector("#botao").onclick = () => abre_abas();
     document.onkeypress = () => abre_abas();
 
     function abre_abas() {
+        let numero_abas = document.querySelector("input").value;
         for (let i = 0; i < (musicas.length < numero_abas ? musicas.length : numero_abas); i++) {
             window.open(musicas[0]);
             musicas.shift();
@@ -40,12 +45,13 @@
     }
 
     function sorteia_musica() {
-        let random_number = (parseInt(Math.random() * 860000000) + 1);
+        let random_number = (parseInt(Math.random() * id_maximo) + 1);
         let url = 'https://api.deezer.com/track/' + random_number;
         fetch("https://cors-anywhere.herokuapp.com/" + url)
             .then(x => x.json())
             .then(x => {
-                if (!x.error) musicas.push('https://deezer.com/track/' + random_number);
+                if (!x.error && x.available_countries.length > 0)
+                    musicas.push('https://deezer.com/track/' + random_number);
                 else sorteia_musica();
             })
     }
