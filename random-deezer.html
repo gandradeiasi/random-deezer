@@ -89,14 +89,19 @@
             </tr>
         `;
 
+        let count = 0;
+
         musicas.forEach(x => {
-            table.innerHTML += `
-                <tr>
-                    <td>${x.id}</td>
-                    <td><a target='_blank' href='${x.link}'>${x.title}</a></td>
-                    <td>${x.rank}</td>
-                </tr>
-            `;
+            if (count < 100 && count < musicas.length) {
+                count++;
+                table.innerHTML += `
+                    <tr>
+                        <td>${x.id}</td>
+                        <td><a target='_blank' href='${x.link}'>${x.title}</a></td>
+                        <td>${x.rank}</td>
+                    </tr>
+                `;
+            }
         });
     }
 </script>
