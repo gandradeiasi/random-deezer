@@ -6,38 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Random Deezer</title>
+
+    <style>
+        th {
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Clique <span id="botao" style="color: blue; cursor: pointer;">aqui</span> para abrir novas abas com as músicas encontradas</h1>
-        <h2>Abas a abrir: <input type="number" value="10"></h2>
-    <h3>Músicas encontradas: <span id="musicas_encontradas">0</span>/<span id="max_musicas_encontradas"></span></h3>
+    <h1>Clique <span id="botao" style="color: blue; cursor: pointer;">aqui</span> para abrir novas abas com as músicas
+        encontradas</h1>
+    <h2>Abas a abrir: <input type="number" value="10"></h2>
+    <h3>Músicas encontradas: <span id="musicas_encontradas">0</span></h3>
     <h4>Se apenas uma aba abrir, permita pop-ups para esta página</h4>
+    <hr>
+    <table></table>
 </body>
 <script>
-    const buffer = 500;
-    const time_interval = 1000;
     const time_timeout = 100;
     const id_maximo = 870000000;
+    const table = document.querySelector('table');
 
     let contador_buscadores = 0;
     let musicas = [];
-
-    document.querySelector("#max_musicas_encontradas").innerHTML = buffer;
-
-    preenche_contadores();
+    let order_asc = true;
+    let order_by = '';
 
     setInterval(() => {
-        preenche_contadores();
         document.querySelector("#musicas_encontradas").innerHTML = musicas.length;
-    }, 100);
+        order(true);
+    }, 1000);
+
+    for (let i = 0; i < 1350; i++) sorteia_musica();
 
     document.querySelector("#botao").onclick = () => abre_abas();
 
     function abre_abas() {
         let numero_abas = document.querySelector("input").value;
         for (let i = 0; i < (musicas.length < numero_abas ? musicas.length : numero_abas); i++) {
-            window.open(musicas[0]);
+            window.open(musicas[0].link);
             musicas.shift();
             contador_buscadores--;
         }
@@ -49,17 +57,47 @@
         fetch("https://cors-anywhere.herokuapp.com/" + url)
             .then(x => x.json())
             .then(x => {
-                if (!x.error && x.available_countries.length > 0)
-                    musicas.push('https://deezer.com/track/' + random_number);
+                if (!x.error && x.available_countries.length > 0) {
+                    musicas.push({
+                        link: 'https://deezer.com/track/' + random_number,
+                        rank: x.rank,
+                        title: x.title,
+                        id: random_number
+                    });
+                }
                 else sorteia_musica();
             })
     }
 
-    function preenche_contadores() {
-        while (contador_buscadores < buffer) {
-            sorteia_musica();
-            contador_buscadores++;
+    async function order(mantem = false) {
+        if (order_by) {
+            if (mantem) order_asc = !order_asc;
+
+            musicas.sort((a, b) => order_asc ? a[order_by] - b[order_by] : b[order_by] - a[order_by]);
+
+            order_asc = !order_asc;
         }
+        renderiza_tabela();
+    }
+
+    function renderiza_tabela() {
+        table.innerHTML = `
+            <tr>
+                <th onclick="order_by='id';order();">ID</th>
+                <th>Música</th>
+                <th onclick="order_by='rank';order();">Rank</th>
+            </tr>
+        `;
+
+        musicas.forEach(x => {
+            table.innerHTML += `
+                <tr>
+                    <td>${x.id}</td>
+                    <td><a target='_blank' href='${x.link}'>${x.title}</a></td>
+                    <td>${x.rank}</td>
+                </tr>
+            `;
+        });
     }
 </script>
 
