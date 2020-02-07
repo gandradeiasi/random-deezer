@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Random Deezer</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+   
+    <script src="assets/js/helpers/DateDeezer.js"></script>
+    <script src="assets/js/helpers/DeezerApi.js"></script>
+    <script src="assets/js/models/Musica.js"></script>
+    <script src="assets/js/models/TabelaMusica.js"></script>
+    <script src="assets/js/View.js"></script>
+    <script src="assets/js/Controller.js"></script>
+</head>
+
+<body>
+        <p>
+            Abas a abrir: 
+            <input id="numero_abas" type="number" value="10">
+            <button id="botao" type="button">Abrir</button>
+        </p>
+        <p>Total: <span id="musicas_encontradas">0</span></p>
+        <p>Apenas Uranked <input id="unranked_only" type="checkbox"></p>
+        <table id="table_musicas"></table>
+        <script> 
+            new Controller().init();
+        </script>
+</body>
+
+</html>

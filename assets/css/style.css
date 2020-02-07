@@ -1,0 +1,19 @@
+body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+table {
+    border-spacing: 0;
+    border: 1px solid black;
+    width: 100%;
+}
+
+th {
+    cursor: pointer;
+    background-color:lightgray;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 0.5rem;
+}
