@@ -2,6 +2,7 @@ class View {
 
     constructor() {
         this.table = document.querySelector('#table_musicas');
+        this.numero_mostrar = document.querySelector('#numero_mostrar');
     }
 
     renderiza_total(musicas) {
@@ -14,22 +15,28 @@ class View {
                 <th value='id'>ID</th>
                 <th value='miniature'>Miniatura</th>
                 <th value='title'>Música</th>
+                <th>Remover</th>
                 <th value='artist'>Artista</th>
+                <th value='album'>Álbum</th>
                 <th value='release'>Data de Lançamento</th>
-                <th value='rank'">Rank</th>
+                <th value='rank'>Rank</th>
+                <th value='duration'>Duração</th>
             </tr>
         `;
 
         musicas.forEach((x,n) => {
-            if (n < 100 && n < musicas.length) {
+            if (n < this.numero_mostrar.value && n < musicas.length) {
                 this.table.innerHTML += `
                     <tr>
                         <td>${x.id}</td>
-                        <td><img src="${x.miniature}"></td>
-                        <td><a target='_blank' href='${x.link}'>${x.title}</a></td>
+                        <td class="text-center"><img class="img-cover" src="${x.miniature}"></td>
+                        <td><a class='remove-music' target='_blank' href='${x.link}'>${x.title}</a></td>
+                        <td class="text-center"><button type='button' value='${x.link}' class='remove-music cursor-pointer'>x</button></td>
                         <td>${x.artist}</td>
+                        <td>${x.album}</td>
                         <td>${x.release.toLocaleDateString()}</td>
-                        <td >${x.rank}</td>
+                        <td>${x.rank}</td>
+                        <td class="text-center">${TimeFormat.secondsToMinutes(x.duration)}</td>
                     </tr>
                 `;
             }

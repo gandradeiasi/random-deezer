@@ -7,10 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Random Deezer</title>
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/config.css">
+    <link rel="stylesheet" href="assets/css/modules.css">
+    <link rel="stylesheet" href="assets/css/specific.css">
    
+    <script src="assets/js/Global.js"></script>
     <script src="assets/js/helpers/DateDeezer.js"></script>
     <script src="assets/js/helpers/DeezerApi.js"></script>
+    <script src="assets/js/helpers/TimeFormat.js"></script>
     <script src="assets/js/models/Musica.js"></script>
     <script src="assets/js/models/TabelaMusica.js"></script>
     <script src="assets/js/View.js"></script>
@@ -18,13 +22,20 @@
 </head>
 
 <body>
-        <p>
+        <span>
             Abas a abrir: 
             <input id="numero_abas" type="number" value="10">
             <button id="botao" type="button">Abrir</button>
-        </p>
-        <p>Total: <span id="musicas_encontradas">0</span></p>
-        <p>Apenas Uranked <input id="unranked_only" type="checkbox"></p>
+            &emsp;|&emsp;
+        </span>
+        <span>
+            Quantidade a mostrar: 
+            <input id="numero_mostrar" type="number" value="20">
+            &emsp;|&emsp;
+        </span>
+        <span>Total: <span id="musicas_encontradas">0</span>&emsp;|&emsp;</span>
+        <span>Apenas Uranked <input id="unranked_only" type="checkbox"></span>
+        <br><br>
         <table id="table_musicas"></table>
         <script> 
             new Controller().init();

@@ -1,4 +1,3 @@
-id_maximo = 875000000;
 url = "https://cors-anywhere.herokuapp.com/https://api.deezer.com";
 
 class DeezerApi {
@@ -15,7 +14,7 @@ class DeezerApi {
 
     static sorteia_musica() {
         return new Promise((resolve, reject) => {
-            fetch(url + "/track/" + (parseInt(Math.random() * id_maximo) + 1))
+            fetch(url + "/track/" + (parseInt(Math.random() * g_id_maximo) + 1))
                 .then(x => x.json())
                 .then(x => {
                     if (!x.error && x.available_countries.length > 0) resolve(x);

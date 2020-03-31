@@ -4,14 +4,13 @@ class Controller {
         this.view = new View();
         this.input_numero_abas = document.querySelector("#numero_abas");
         this.input_unraked_only = document.querySelector("#unranked_only");
-        this.numero_buscadores = 1350;
         this.unranked_only = false;
     }
 
     init() {
-        for (let i = 0; i < this.numero_buscadores; i++) this._inicia_buscador_aleatorio();
+        for (let i = 0; i < g_numero_buscadores; i++) this._inicia_buscador_aleatorio();
 
-        this._renderiza();
+        setInterval(() => this._renderiza(), 1000);
 
         this.input_unraked_only.onchange = () => {
             if (this.input_unraked_only.checked) {
@@ -39,13 +38,41 @@ class Controller {
     }
 
     _adiciona_musica(musica) {
-        this.tabela_musica.adiciona_musica(musica);
-        this.tabela_musica.order(true);
-        this._renderiza();
+        let durationSeconds = parseInt(musica.duration);
+
+        if (durationSeconds >= g_minDurationSeconds &&
+            durationSeconds <= g_maxDurationSeconds &&
+            !this._contem_string_proibida(musica.artist) &&
+            !this._contem_string_proibida(musica.album) &&
+            !this._contem_string_proibida(musica.title)
+        ) {
+            this.tabela_musica.adiciona_musica(musica);
+            this.tabela_musica.order(true);
+        }
+    }
+
+    _contem_string_proibida(string) {
+        for (let i = 0; i < g_strings_proibidas.length; i++) {
+            if (string.toLowerCase().includes(g_strings_proibidas[i]))
+                return true;
+        }
+        return false;
     }
 
     _renderiza() {
         this.view.renderiza_table(this.tabela_musica.musicas);
+
+        document.querySelectorAll('.remove-music')
+            .forEach(x =>
+                x.onclick = () => {
+                    if (x.value)
+                        this.tabela_musica.musicas = this.tabela_musica.musicas.filter(y => y.link != x.value)
+                    else if (x.href)
+                        this.tabela_musica.musicas = this.tabela_musica.musicas.filter(y => y.link != x.href)
+                    this._renderiza();
+                }
+            );
+
         this.view.renderiza_total(this.tabela_musica.musicas);
     }
 
