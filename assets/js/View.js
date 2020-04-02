@@ -20,7 +20,6 @@ class View {
                 <th value='album'>Álbum</th>
                 <th value='release'>Data de Lançamento</th>
                 <th value='rank'>Rank</th>
-                <th value='duration'>Duração</th>
             </tr>
         `;
 
@@ -31,12 +30,11 @@ class View {
                         <td>${x.id}</td>
                         <td class="text-center"><img class="img-cover" src="${x.miniature}"></td>
                         <td><a class='remove-music' target='_blank' href='${x.link}'>${x.title}</a></td>
-                        <td class="text-center"><button type='button' value='${x.link}' class='remove-music cursor-pointer'>x</button></td>
+                        <td class="text-center"><button type='button' value='${x.link}' class='remove-music botao-remover'>x</button></td>
                         <td>${x.artist}</td>
                         <td>${x.album}</td>
                         <td>${x.release.toLocaleDateString()}</td>
                         <td>${x.rank}</td>
-                        <td class="text-center">${TimeFormat.secondsToMinutes(x.duration)}</td>
                     </tr>
                 `;
             }

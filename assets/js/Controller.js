@@ -4,13 +4,21 @@ class Controller {
         this.view = new View();
         this.input_numero_abas = document.querySelector("#numero_abas");
         this.input_unraked_only = document.querySelector("#unranked_only");
+        this.input_include_explicit = document.querySelector("#include_explicit");
         this.unranked_only = false;
+        this.include_explicit = false;
+        this.pode_renderizar = true;
     }
 
     init() {
-        for (let i = 0; i < g_numero_buscadores; i++) this._inicia_buscador_aleatorio();
+        setInterval(() => {
+            for (let i = 0; i < 50; i++)
+                this._inicia_buscador_aleatorio();
+        }, 5000);
 
-        setInterval(() => this._renderiza(), 1000);
+        this._renderiza();
+
+        setInterval(() => this.pode_renderizar = true, 2000);
 
         this.input_unraked_only.onchange = () => {
             if (this.input_unraked_only.checked) {
@@ -18,6 +26,14 @@ class Controller {
                 this.unranked_only = true;
             }
             else this.unranked_only = false;
+        }
+
+        this.input_include_explicit.onchange = () => {
+            if (!this.input_include_explicit.checked) {
+                this.tabela_musica.musicas = this.tabela_musica.musicas.filter(x => !x.explicit);
+                this.include_explicit = false;
+            }
+            else this.include_explicit = true;
         }
 
         document.querySelector("#botao").onclick = () => this.abre_abas();
@@ -48,6 +64,10 @@ class Controller {
         ) {
             this.tabela_musica.adiciona_musica(musica);
             this.tabela_musica.order(true);
+            if (this.pode_renderizar) {
+                this._renderiza();
+                this.pode_renderizar = false;
+            }
         }
     }
 
@@ -72,6 +92,12 @@ class Controller {
                     this._renderiza();
                 }
             );
+        document.querySelectorAll('img')
+            .forEach(x => {
+                x.addEventListener("error", () => {
+                    x.src = x.src.split("?")[0] + "?" + new Date().getTime();
+                });
+            });
 
         this.view.renderiza_total(this.tabela_musica.musicas);
     }
@@ -79,13 +105,8 @@ class Controller {
     _inicia_buscador_aleatorio() {
         DeezerApi.sorteia_musica()
             .then(x => {
-                if (this.unranked_only) {
-                    if (x.rank == 0) {
-                        this._adiciona_musica(new Musica(x));
-                    }
-                }
-                else this._adiciona_musica(new Musica(x));
-                this._inicia_buscador_aleatorio();
+                if (!((this.unranked_only && x.rank != 0) || (!this.include_explicit && x.explicit_lyrics)))
+                    this._adiciona_musica(new Musica(x));
             });
     }
 }

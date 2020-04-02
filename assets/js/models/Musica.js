@@ -9,5 +9,6 @@ class Musica {
         this.artist = json.artist.name;
         this.release = DateDeezer.parseDate(json.release_date);
         this.duration = json.duration;
+        this.explicit = json.explicit_lyrics;
     }
 }
