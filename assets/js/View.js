@@ -14,7 +14,7 @@ class View {
             <tr>
                 <th value='id'>ID</th>
                 <th value='miniature'>Miniatura</th>
-                <th value='title'>Música</th>
+                <th value='title' class='column-title'>Música</th>
                 <th>Remover</th>
                 <th value='artist'>Artista</th>
                 <th value='album'>Álbum</th>

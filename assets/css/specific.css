@@ -3,3 +3,7 @@
     height: 50px;
     cursor: pointer;
 }
+
+.column-title {
+    width: 150px;
+}
