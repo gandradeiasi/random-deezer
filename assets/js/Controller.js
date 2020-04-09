@@ -12,7 +12,7 @@ class Controller {
 
     init() {
         setInterval(() => {
-            for (let i = 0; i < 50; i++)
+            for (let i = 0; i < 47; i++)
                 this._inicia_buscador_aleatorio();
         }, 5000);
 
