@@ -92,13 +92,7 @@ class Controller {
                     this._renderiza();
                 }
             );
-        document.querySelectorAll('img')
-            .forEach(x => {
-                x.addEventListener("error", () => {
-                    x.src = x.src.split("?")[0] + "?" + new Date().getTime();
-                });
-            });
-
+            
         this.view.renderiza_total(this.tabela_musica.musicas);
     }
 
