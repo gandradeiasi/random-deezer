@@ -25,6 +25,7 @@ const g_strings_proibidas = [
     "anthems",
     "the very best",
     "the best",
+    "mono version",
     "best of",
     "tribute",
     "cover",
