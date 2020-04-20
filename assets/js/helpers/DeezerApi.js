@@ -12,7 +12,7 @@ class DeezerApi {
 
     static sorteia_musica() {
         return new Promise((resolve, reject) => {
-            fetch(g_url + "/track/" + (parseInt(Math.random() * g_id_maximo) + 1))
+            fetch(g_url + "/track/" + (parseInt(Math.random() * g_id_maximo) + 1), g_fetch_params)
                 .then(x => x.json())
                 .then(x => {
                     if (!x.error && x.available_countries.length > 0) resolve(x);

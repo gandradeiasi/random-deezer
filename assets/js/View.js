@@ -33,7 +33,7 @@ class View {
                         <td><a class='remove-music' target='_blank' href='${x.link}'>${x.title}</a></td>
                         <td>${x.artist}</td>
                         <td>${x.album}</td>
-                        <td>${x.release.toLocaleDateString()}</td>
+                        <td>${new Date(x.release).toLocaleDateString()}</td>
                         <td>${x.rank}</td>
                     </tr>
                 `;

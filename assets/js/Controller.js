@@ -11,10 +11,13 @@ class Controller {
     }
 
     init() {
+        for (let i = 0; i < g_num_request; i++)
+            this._inicia_buscador_aleatorio();
+
         setInterval(() => {
-            for (let i = 0; i < 45; i++)
+            for (let i = 0; i < g_num_request; i++)
                 this._inicia_buscador_aleatorio();
-        }, 5000);
+        }, g_interval_request);
 
         this._renderiza();
 
@@ -90,6 +93,7 @@ class Controller {
                     else if (x.href)
                         this.tabela_musica.musicas = this.tabela_musica.musicas.filter(y => y.link != x.href)
                     this._renderiza();
+                    this.tabela_musica.atualizaCookie();
                 }
             );
             

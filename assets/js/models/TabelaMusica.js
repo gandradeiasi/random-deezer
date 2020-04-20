@@ -3,11 +3,17 @@ class TabelaMusica {
         this.musicas = [];
         this.order_asc = '';
         this.order_by = '';
+
+        if (Cookie.getCookie('tabelaMusica')) 
+            this.musicas = JSON.parse(Cookie.getCookie('tabelaMusica'))
+
+        this.atualizaCookie();
     }
 
     adiciona_musica(musica) {
         if (!musica.release) return;
         this.musicas.push(musica);
+        this.atualizaCookie();
     }
 
     order(mantem_order_by, order_by = this.order_by) {
@@ -23,5 +29,9 @@ class TabelaMusica {
 
             this.order_asc = !this.order_asc;
         }
+    }
+
+    atualizaCookie() {
+        Cookie.setCookie('tabelaMusica',JSON.stringify(this.musicas), 365);
     }
 }

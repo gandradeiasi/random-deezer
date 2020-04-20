@@ -1,9 +1,13 @@
-const g_url = "https://cors-anywhere.herokuapp.com/https://api.deezer.com";
+const g_url = "https://api.deezer.com";
 
 const g_id_maximo = 925000000;
 
 const g_minDurationSeconds = 60 * 2.5;
 const g_maxDurationSeconds = 60 * 12;
+const g_num_request = 45;
+const g_interval_request = 5000;
+
+const g_fetch_params = {};
 
 const g_strings_proibidas = [
     "yoga",
