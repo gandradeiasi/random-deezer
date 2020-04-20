@@ -4,10 +4,8 @@ class TabelaMusica {
         this.order_asc = '';
         this.order_by = '';
 
-        if (Cookie.getCookie('tabelaMusica')) 
-            this.musicas = JSON.parse(Cookie.getCookie('tabelaMusica'))
-
-        this.atualizaCookie();
+        if (localStorage.getItem('tabelaMusica') != 'null' && localStorage.getItem('tabelaMusica')) 
+            this.musicas = JSON.parse(localStorage.getItem('tabelaMusica'));
     }
 
     adiciona_musica(musica) {
@@ -32,6 +30,6 @@ class TabelaMusica {
     }
 
     atualizaCookie() {
-        Cookie.setCookie('tabelaMusica',JSON.stringify(this.musicas), 365);
+        window.localStorage.setItem('tabelaMusica',JSON.stringify(this.musicas));
     }
 }

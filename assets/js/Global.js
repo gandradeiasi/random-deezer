@@ -1,6 +1,6 @@
 const g_url = "https://api.deezer.com";
 
-const g_id_maximo = 925000000;
+const g_id_maximo = 921000000;
 
 const g_minDurationSeconds = 60 * 2.5;
 const g_maxDurationSeconds = 60 * 12;
