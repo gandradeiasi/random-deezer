@@ -4,11 +4,15 @@ class TabelaMusica {
         this.order_asc = '';
         this.order_by = '';
 
-        if (localStorage.getItem('tabelaMusica') != 'null' && localStorage.getItem('tabelaMusica')) 
+        if (localStorage.getItem('tabelaMusica') != 'null' && localStorage.getItem('tabelaMusica'))
             this.musicas = JSON.parse(localStorage.getItem('tabelaMusica'));
     }
 
     adiciona_musica(musica) {
+        // fetch(g_url + '/playlist/6883673444/' + musica.id)
+        //     .then(x => x.json())
+        //     .then(x => console.log(x));
+
         if (!musica.release) return;
         this.musicas.push(musica);
         this.atualizaCookie();
@@ -30,6 +34,6 @@ class TabelaMusica {
     }
 
     atualizaCookie() {
-        window.localStorage.setItem('tabelaMusica',JSON.stringify(this.musicas));
+        window.localStorage.setItem('tabelaMusica', JSON.stringify(this.musicas));
     }
 }

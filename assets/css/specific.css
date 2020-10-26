@@ -7,3 +7,8 @@
 .column-title {
     width: 150px;
 }
+
+#ctrl-c {
+    position: absolute;
+    left: -99999px;
+}

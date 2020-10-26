@@ -46,6 +46,12 @@ class Controller {
                 this._renderiza();
             }
         }
+        document.addEventListener('keydown', e => {
+            if (e.key == "ArrowLeft") 
+                document.querySelector('button.remove-music').click();
+            else if (e.key == "ArrowRight")
+                document.querySelector('a.remove-music').click();
+        });
     }
 
     abre_abas() {

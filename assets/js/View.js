@@ -15,6 +15,7 @@ class View {
                 <th value='id'>ID</th>
                 <th value='miniature'>Miniatura</th>
                 <th>Remover</th>
+                <th>Copiar</th>
                 <th value='title' class='column-title'>Música</th>                
                 <th value='artist'>Artista</th>
                 <th value='album'>Álbum</th>
@@ -30,6 +31,7 @@ class View {
                         <td>${x.id}</td>
                         <td class="text-center"><img class="img-cover" src="${x.miniature}"></td>
                         <td class="text-center"><button type='button' value='${x.link}' class='remove-music botao-remover'>x</button></td>
+                        <td><button onclick="ctrlC('${x.artist} ${x.title}');">Copiar</button</td>
                         <td><a class='remove-music' target='_blank' href='${x.link}'>${x.title}</a></td>
                         <td>${x.artist}</td>
                         <td>${x.album}</td>
@@ -40,4 +42,14 @@ class View {
             }
         });
     }
+}
+
+function ctrlC(string) {
+    var copyText = document.getElementById("ctrl-c");
+    copyText.value = string;
+
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+    document.execCommand("copy");
 }
