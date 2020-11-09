@@ -5,3 +5,7 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.img-cover {
+    width: 400px;
+}

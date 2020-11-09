@@ -12,3 +12,7 @@
     position: absolute;
     left: -99999px;
 }
+
+tbody:nth-child(3) {
+    opacity: 0;
+}

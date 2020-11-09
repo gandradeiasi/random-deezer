@@ -12,15 +12,15 @@ class View {
     renderiza_table(musicas) {
         this.table.innerHTML = `
             <tr>
-                <th value='id'>ID</th>
-                <th value='miniature'>Miniatura</th>
+                <th style="display:none" value='id'>ID</th>
                 <th>Remover</th>
+                <th value='miniature'>Miniatura</th>
                 <th>Copiar</th>
-                <th value='title' class='column-title'>Música</th>                
-                <th value='artist'>Artista</th>
-                <th value='album'>Álbum</th>
-                <th value='release'>Data de Lançamento</th>
-                <th value='rank'>Rank</th>
+                <th style="display:none" value='release'>Data de Lançamento</th>
+                <th style="display:none" value='title' class='column-title'>Música</th>                
+                <th style="display:none" value='artist'>Artista</th>
+                <th style="display:none" value='album'>Álbum</th>
+                <th style="display:none" value='rank'>Rank</th>
             </tr>
         `;
 
@@ -28,15 +28,18 @@ class View {
             if (n < this.numero_mostrar.value && n < musicas.length) {
                 this.table.innerHTML += `
                     <tr>
-                        <td>${x.id}</td>
-                        <td class="text-center"><img class="img-cover" src="${x.miniature}"></td>
+                        <td style="display:none">${x.id}</td>
                         <td class="text-center"><button type='button' value='${x.link}' class='remove-music botao-remover'>x</button></td>
-                        <td><button onclick="ctrlC('${x.artist} ${x.title}');">Copiar</button</td>
-                        <td><a class='remove-music' target='_blank' href='${x.link}'>${x.title}</a></td>
-                        <td>${x.artist}</td>
-                        <td>${x.album}</td>
-                        <td>${new Date(x.release).toLocaleDateString()}</td>
-                        <td>${x.rank}</td>
+                        <td class="text-center"><img class="img-cover" src="${x.miniature}"></td>
+                        <td>
+                            <button onclick="ctrlC('${x.artist.replace(/['"]/,'')} - ${x.title.replace(/['"]/,'')}');">Salvar</button>
+                            <button onclick="window.open('https://open.spotify.com/search/${x.artist.replace(/['"]/,'')} ${x.title.replace(/['"]/,'')}');">Spotify</button>
+                        </td>
+                        <td style="display:none">${new Date(x.release).toLocaleDateString()}</td>
+                        <td style="display:none"><a class='remove-music' target='_blank' href='${x.link}'>${x.title}</a></td>
+                        <td style="display:none">${x.artist}</td>
+                        <td style="display:none">${x.album}</td>
+                        <td style="display:none">${x.rank}</td>
                     </tr>
                 `;
             }

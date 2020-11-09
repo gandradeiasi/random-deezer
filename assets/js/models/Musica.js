@@ -1,6 +1,6 @@
 class Musica {
     constructor(json) {
-        this.miniature = json.album.cover_big;
+        this.miniature = json.album.cover_medium;
         this.album = json.album.title;
         this.link = json.link;
         this.rank = json.rank;

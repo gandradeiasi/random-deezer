@@ -47,7 +47,7 @@ class Controller {
             }
         }
         document.addEventListener('keydown', e => {
-            if (e.key == "ArrowLeft") 
+            if (e.key == "ArrowLeft" || e.key == "f") 
                 document.querySelector('button.remove-music').click();
             else if (e.key == "ArrowRight")
                 document.querySelector('a.remove-music').click();
@@ -94,6 +94,10 @@ class Controller {
         document.querySelectorAll('.remove-music')
             .forEach(x =>
                 x.onclick = () => {
+                    setTimeout(() => {
+                        console.log(x.value)
+                    });
+
                     if (x.value)
                         this.tabela_musica.musicas = this.tabela_musica.musicas.filter(y => y.link != x.value)
                     else if (x.href)
